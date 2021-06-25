@@ -93,7 +93,7 @@ function App() {
 
     <div className="container">
       <h3 className="text-center my-3 heading">My List</h3>                       
-      {todos.length===0? "No tasks left":
+      {todos.length===0? "There is no Task":
       todos.map((todo,index)=>{
       return(
         <div key={index}>
