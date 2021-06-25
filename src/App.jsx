@@ -3,16 +3,20 @@ import logo from './logo.svg'
 import './App.css'
 import './style.css'
 // import header from './mycomponents/header'
-var initialstate = localStorage.getItem('todos') || [];
+var initialstate = JSON.parse(localStorage.getItem('todos')) || [];
 
 function App() {
 
-  var [todos, settodo] = useState([
+  var [todos, settodo] = useState(initialstate);
 
-  ]);
+  React.useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
-  if(initialstate.length != 0 && typeof initialstate != "undefined")
-  settodo(initialstate);
+  console.log(initialstate);
+
+  // if(initialstate.length != 0 && typeof initialstate != "undefined")
+  // settodo(initialstate);
 
   const ondelete = (todo)=>{;
     console.log("Deleted",todos);
@@ -42,7 +46,6 @@ function App() {
     }
     // settodo(todos.concat(newtodo));
     settodo([...todos,newtodo]);
-    localStorage.setItem("todos",todos);
     console.log(localStorage.getItem("todos"));
     console.log(newtodo);
   }
