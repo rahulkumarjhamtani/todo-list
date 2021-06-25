@@ -3,8 +3,16 @@ import logo from './logo.svg'
 import './App.css'
 import './style.css'
 // import header from './mycomponents/header'
+var initialstate = localStorage.getItem('todos') || [];
 
 function App() {
+
+  var [todos, settodo] = useState([
+
+  ]);
+
+  if(initialstate.length != 0 && typeof initialstate != "undefined")
+  settodo(initialstate);
 
   const ondelete = (todo)=>{;
     console.log("Deleted",todos);
@@ -26,34 +34,20 @@ function App() {
 
   const addtodo = (title,desc) => {
     console.log("Todo",title,desc);
-    let sno = todos[todos.length-1].sno + 1;
+    // let sno = todos[todos.length-1].sno + 1;
     const newtodo = {
-      sno : sno,
+      // sno : sno,
       title: title,
       desc: desc
     }
-    // settodo({todos,newtodo});
+    // settodo(todos.concat(newtodo));
+    settodo([...todos,newtodo]);
+    localStorage.setItem("todos",todos);
+    console.log(localStorage.getItem("todos"));
     console.log(newtodo);
   }
 
-  const [todos, settodo] = useState([
-    {
-      sno:1,
-      title:"Go to the market",
-      desc:"You need to done this task by today"
-    },
-    {
-      sno:2,
-      title:"Go to the college",
-      desc:"You need to done this task by tomorrow"
-    },
-    {
-      sno:3,
-      title:"Go to the bank",
-      desc:"You need to done this task by day after tomorrow"
-    },
-
-  ]);
+  
   return (
     <>
       {/* <header/> */}
@@ -97,20 +91,15 @@ function App() {
     <div className="container">
       <h3 className="text-center my-3 heading">My List</h3>                       
       {todos.length===0? "No tasks left":
-      todos.map((todo)=>{
+      todos.map((todo,index)=>{
       return(
-        <div key={todo.sno}>
+        <div key={index}>
         <h4>{todo.title}</h4>
         <p>{todo.desc}</p>
         <button className="btn btn-danger" onClick={()=>{ondelete(todo)}}>Delete</button>
         </div>
       )}) }
       
-    </div>
-    <div>
-      <p className="footerstyle text-center card-footer text-muted">
-        Copyright &copy; ItsMyList.com
-      </p>  
     </div>
     </>
   )
